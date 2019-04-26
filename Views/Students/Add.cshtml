@@ -1,0 +1,32 @@
+﻿@model AspNetMVCDemo.Models.Student
+
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/master.cshtml";
+}
+
+@section scripts {
+   @Scripts.Render("~/bundles/jqueryval")
+}
+
+<h2>Add</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div>Name</div>
+    @Html.TextBoxFor(m => m.Name)
+    @Html.ValidationMessageFor(m => m.Name)
+    <p></p>
+    <div>Email</div>
+    @Html.TextBoxFor(m => m.Email)
+    @Html.ValidationMessageFor(m => m.Email)
+    <p></p>
+    <div>Course ID</div>
+    @Html.TextBoxFor(m => m.Course)
+    @Html.ValidationMessageFor(m => m.Course)
+    <p></p>
+    <input type="submit" value="Add Student" />
+}
+
+

@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students</title>
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <div class="banner"> Students </div>
+    <div class="menu">
+        @Html.ActionLink("List", "List", "Students")
+        @Html.ActionLink("Add", "Add", "Students")
+        @Html.ActionLink("Search", "Search", "Students")
+    </div>
+    @RenderBody()
+
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
