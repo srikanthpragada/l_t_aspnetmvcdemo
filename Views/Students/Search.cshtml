@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/master.cshtml";
+}
+
+<h2>Search Students</h2>
+
+@section scripts {
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+}
+
+@using (Ajax.BeginForm("DoSearch", new AjaxOptions { UpdateTargetId = "results" }))
+{
+ <span>Name : </span> <input type="text" name="sname" />
+ <input type="submit" value="Search" />
+ <p/>
+ <div id="results">
+
+ </div>
+}

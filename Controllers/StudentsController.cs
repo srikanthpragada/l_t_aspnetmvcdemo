@@ -11,37 +11,29 @@ namespace AspNetMVCDemo.Controllers
     public class StudentsController : Controller
     {
         // GET: Students
+        [OutputCache(Duration = 60 , VaryByParam ="cat")]
         public ActionResult List()
         {
-            SqlConnection con = new SqlConnection(Database.ConnectionString);
-            con.Open();
-            SqlCommand cmd = new SqlCommand("select * from students", con);
-            SqlDataReader dr = cmd.ExecuteReader();
-            var students = new List<Student>();
-
-            while(dr.Read())
-            {
-                students.Add(new Student
-                {
-                    Id = dr["StudentID"].ToString(),
-                    Name = dr["Fullname"].ToString(),
-                    Email = dr["Email"].ToString(),
-                    Course = Int32.Parse(dr["Course"].ToString())
-                }
-                );
-            }
-            return View(students);
+            ViewBag.Timestamp = DateTime.Now.ToLongTimeString();
+            return View(StudentDAL.GetStudents());
         }
 
         
         public ActionResult Add()
         {
-            Student s = new Student();
-            return View(s);
+            var courses = new List<SelectListItem>();
+            courses.Add(new SelectListItem { Text = "MS.Net", Value = "1" });
+            courses.Add(new SelectListItem { Text = "Java", Value = "2" });
+            courses.Add(new SelectListItem { Text = "Python", Value = "3" });
+
+            AddViewModel model = new AddViewModel();
+            model.Student = new Student();
+            model.Courses = courses;
+            return View(model);
 
         }
         [HttpPost]
-        public ActionResult Add(Student model)
+        public ActionResult Add(Student model)  
         {
             // add to Students table
             if (ModelState.IsValid)
@@ -52,13 +44,36 @@ namespace AspNetMVCDemo.Controllers
             return View(model);
         }
 
-
+        [Authorize]
         public ActionResult Delete(int id)
         {
+            ViewBag.User = User.Identity.Name;
             // delete student with given id 
+            // ViewBag.Message = "Deleted student with id : " + id;
+            // Session["Message"] = "Deleted student with id : " + id;
+            bool done = StudentDAL.DeleteStudent(id);
+            if ( done )
+                  TempData["Message"] = "Deleted student with id : " + id;
+            else
+                  TempData["Message"] = "Sorry! Could not delete student with id : " + id;
 
             return RedirectToAction("List");
 
         }
+
+        public ActionResult Search()
+        {
+            return View();
+        }
+
+
+        public ActionResult DoSearch(string sname)
+        {
+            var students = StudentDAL.SearchStudents(sname);
+            return PartialView("SearchResult", students);
+        }
+
     }
+
+
 }

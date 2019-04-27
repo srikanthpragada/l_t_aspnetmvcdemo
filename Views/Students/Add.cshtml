@@ -1,4 +1,4 @@
-﻿@model AspNetMVCDemo.Models.Student
+﻿@model AspNetMVCDemo.Models.AddViewModel
 
 @{
     ViewBag.Title = "Add";
@@ -15,16 +15,15 @@
 {
     @Html.AntiForgeryToken()
     <div>Name</div>
-    @Html.TextBoxFor(m => m.Name)
-    @Html.ValidationMessageFor(m => m.Name)
+    @Html.TextBoxFor(m => Model.Student.Name)
+    @Html.ValidationMessageFor(m => Model.Student.Name)
     <p></p>
     <div>Email</div>
-    @Html.TextBoxFor(m => m.Email)
-    @Html.ValidationMessageFor(m => m.Email)
+    @Html.TextBoxFor(m => Model.Student.Email)
+    @Html.ValidationMessageFor(m => Model.Student.Email)
     <p></p>
     <div>Course ID</div>
-    @Html.TextBoxFor(m => m.Course)
-    @Html.ValidationMessageFor(m => m.Course)
+    @Html.DropDownListFor(m => Model.Student.Course, Model.Courses)
     <p></p>
     <input type="submit" value="Add Student" />
 }

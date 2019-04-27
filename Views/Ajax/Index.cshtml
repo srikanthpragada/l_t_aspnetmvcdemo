@@ -1,0 +1,48 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script>
+        function getDateTime() {
+            $.get("/Ajax/Now", {}, showDateTime);
+        }
+
+        function showDateTime(response) {
+            $("#info").text(response);
+        }
+    </script>
+
+</head>
+<body>
+    <h1>Ajax with jQuery</h1>
+    <button onclick="getDateTime()">Show Date Time</button>
+    <h1 id="info"></h1>
+
+    <h1>Ajax with Ajax Helper</h1>
+    @Ajax.ActionLink("Show Date & Time","Now",
+           new AjaxOptions {  UpdateTargetId = "info2"})
+    <h1 id="info2"></h1>
+
+    @using (Ajax.BeginForm("Add", new AjaxOptions { UpdateTargetId = "result" }))
+    {
+        <div>Number1 </div>
+        <input type="number" name="first" />
+        <p/>
+        <div>Number2 </div>
+        <input type="number" name="second" />
+        <p/>
+        <input type="submit" value="Add"/>
+        <p/>
+        <h2 id="result"></h2>
+    }
+</body>
+</html>
