@@ -27,13 +27,12 @@ namespace AspNetMVCDemo.Controllers
             courses.Add(new SelectListItem { Text = "Python", Value = "3" });
 
             AddViewModel model = new AddViewModel();
-            model.Student = new Student();
             model.Courses = courses;
             return View(model);
 
         }
         [HttpPost]
-        public ActionResult Add(Student model)  
+        public ActionResult Add(AddViewModel model)  
         {
             // add to Students table
             if (ModelState.IsValid)
@@ -51,7 +50,7 @@ namespace AspNetMVCDemo.Controllers
             // delete student with given id 
             // ViewBag.Message = "Deleted student with id : " + id;
             // Session["Message"] = "Deleted student with id : " + id;
-            bool done = StudentDAL.DeleteStudent(id);
+            bool done = true; // StudentDAL.DeleteStudent(id);
             if ( done )
                   TempData["Message"] = "Deleted student with id : " + id;
             else

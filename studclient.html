@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="Scripts/jquery-3.3.1.js"></script>
+    <script>
+        URL = "/api/Stud/"
+        function get_student() {
+            $.ajax(
+                {
+                    "url": URL + $("#sid").val(),
+                    "type": "get",
+                    "success":
+                        function (student) {
+                            $("#msg").text(student.Name);
+                        },
+                    "error":
+                        function () {
+                            $("#msg").text("Sorry! Student Not Found!");
+                        }
+                }
+            );
+        }
+
+        function get_students() {
+            $.getJSON(URL, {}, showStudents);
+        }
+
+        function showStudents(students) {
+            //console.log(students);
+            $("#students").text("");
+            for (i = 0; i < students.length; i++) {
+                s = students[i];
+                $("#students").append("<li>" + s.Name + " - " + s.Email + "</li>");
+            }
+        }
+
+        function addStudent() {
+            var url = "/api/Stud";
+            var data = {
+                "Name": $("#sname").val(),
+                "Email": $("#semail").val(),
+                "Course": $("#scourse").val()
+            };
+
+            $.ajax(
+                {
+                    "url": URL,
+                    "data": data,
+                    "type": "post",
+                    "success": function () {
+                        alert("Successfully added student")
+                    },
+                    "error": function () {
+                        alert("Sorry! Could not add student");
+                    }
+                }
+            );
+        }
+
+    </script>
+</head>
+<body>
+    <h2>Add Student</h2>
+    Name : <input type="text" id="sname" />
+    Email : <input type="text" id="semail" />
+    Course : <input type="number" id="scourse" />
+    <button onclick="addStudent()">Add Student</button>
+    <p/>
+    <span id="info"></span>
+
+    <h2>Student client</h2>
+    sid : <input type="number" id="sid" />
+    <button onclick="get_student()">Get Student</button>
+    <span id="msg"></span>
+    <p></p>
+    <hr />
+    <button onclick="get_students()">Get Students</button>
+    <ul id="students"></ul>
+</body>
+</html>

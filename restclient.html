@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="Scripts/jquery-3.3.1.js"></script>
+    <script>
+
+        function get_message() {
+            $.getJSON("/api/Messages/" + $("#mid").val(), {},
+                function (message) {
+                    $("#msg").text(message);
+                }
+              );
+        }
+
+        function get_messages() {
+            $.getJSON("/api/Messages", {}, showMessages);
+        }
+
+        function showMessages(response) {
+            // console.log(response);
+            $("#messages").text("");
+            for (i = 0; i < response.length; i++)
+                $("#messages").append("<li>" + response[i] + "</li>");
+        }
+
+    </script>
+</head>
+<body>
+<h2>Rest client</h2>
+Message id : <input type="number" id="mid" />
+<button onclick="get_message()">Get Message</button>
+<span id="msg"></span>
+<p></p>
+<hr/>    
+<button onclick="get_messages()">Get all messages</button>
+<ul id="messages">
+
+</ul>
+</body>
+</html>

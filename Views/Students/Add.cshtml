@@ -15,15 +15,15 @@
 {
     @Html.AntiForgeryToken()
     <div>Name</div>
-    @Html.TextBoxFor(m => Model.Student.Name)
-    @Html.ValidationMessageFor(m => Model.Student.Name)
+    @Html.TextBoxFor(m => m.Name)
+    @Html.ValidationMessageFor(m => m.Name)
     <p></p>
     <div>Email</div>
-    @Html.TextBoxFor(m => Model.Student.Email)
-    @Html.ValidationMessageFor(m => Model.Student.Email)
+    @Html.TextBoxFor(m => m.Email)
+    @Html.ValidationMessageFor(m => m.Email)
     <p></p>
     <div>Course ID</div>
-    @Html.DropDownListFor(m => Model.Student.Course, Model.Courses)
+    @Html.DropDownListFor(m => m.Course, Model.Courses)
     <p></p>
     <input type="submit" value="Add Student" />
 }
